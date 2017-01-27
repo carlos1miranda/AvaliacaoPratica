@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AvaliacaoPratica.Models.Pratos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pratos</h2>
+<div class="container">
+
+    <a href="~/Pratos/Create" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+        Cadastrar Novo Prato
+    </a>
+</div>
+<br />
+<div class="well">
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.PratoNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PratoDescricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+
+                @Html.DisplayNameFor(model => model.FK_RestauranteId)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(" ", "Delete", new { id = item.PratoId }, new { @class = "btn btn-red glyphicon glyphicon-minus" })
+                    @Html.ActionLink(" ", "Edit", new { id = item.PratoId }, new { @class = "btn btn-blue glyphicon glyphicon-pencil" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PratoNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PratoDescricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Restaurantes.RestauranteNome)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

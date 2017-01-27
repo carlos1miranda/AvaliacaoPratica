@@ -1,0 +1,75 @@
+﻿@model IEnumerable<AvaliacaoPratica.Models.Restaurantes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Restaurantes</h2>
+<div class="panel panel-info">
+    <div class="panel-heading">Filtros</div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <p>
+                <div class="container">
+                    Nome:
+                    @Html.TextBox("nome")
+                </div>
+            </p>
+            <p>
+
+                <div class="container">
+                    <button type="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span> Pesquisar
+                    </button>
+
+                    <a href="~/Restaurantes/Create" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Cadastrar Novo Restaurante
+                    </a>
+                </div>
+            </p>
+        }
+
+    </div>
+</div>
+<div class="well">
+    <table class="table">
+        <tr>
+
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.RestauranteNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span>
+                        @Html.ActionLink(" ", "Delete", new { id = item.RestauranteId }, new { @class = "btn btn-red glyphicon glyphicon-minus" })
+                        @Html.ActionLink(" ", "Edit", new { id = item.RestauranteId }, new { @class = "btn btn-blue glyphicon glyphicon-pencil" })
+                    </span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RestauranteNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Endereco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

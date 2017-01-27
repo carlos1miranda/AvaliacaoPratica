@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PraticaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Pratos">
+          <Key>
+            <PropertyRef Name="PratoId" />
+          </Key>
+          <Property Name="PratoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PratoNome" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PratoDescricao" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Preco" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FK_RestauranteId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurantes">
+          <Key>
+            <PropertyRef Name="RestauranteId" />
+          </Key>
+          <Property Name="RestauranteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestauranteNome" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Endereco" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefone" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Pratos_Restaurantes">
+          <End Role="Restaurantes" Type="Self.Restaurantes" Multiplicity="1" />
+          <End Role="Pratos" Type="Self.Pratos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurantes">
+              <PropertyRef Name="RestauranteId" />
+            </Principal>
+            <Dependent Role="Pratos">
+              <PropertyRef Name="FK_RestauranteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PraticaDBModelStoreContainer">
+          <EntitySet Name="Pratos" EntityType="Self.Pratos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurantes" EntityType="Self.Restaurantes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Pratos_Restaurantes" Association="Self.FK_Pratos_Restaurantes">
+            <End Role="Restaurantes" EntitySet="Restaurantes" />
+            <End Role="Pratos" EntitySet="Pratos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PraticaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Pratos">
+          <Key>
+            <PropertyRef Name="PratoId" />
+          </Key>
+          <Property Name="PratoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PratoNome" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PratoDescricao" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Preco" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FK_RestauranteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Restaurantes" Relationship="Self.FK_Pratos_Restaurantes" FromRole="Pratos" ToRole="Restaurantes" />
+        </EntityType>
+        <EntityType Name="Restaurantes">
+          <Key>
+            <PropertyRef Name="RestauranteId" />
+          </Key>
+          <Property Name="RestauranteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestauranteNome" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Endereco" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pratos" Relationship="Self.FK_Pratos_Restaurantes" FromRole="Restaurantes" ToRole="Pratos" />
+        </EntityType>
+        <Association Name="FK_Pratos_Restaurantes">
+          <End Role="Restaurantes" Type="Self.Restaurantes" Multiplicity="1" />
+          <End Role="Pratos" Type="Self.Pratos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurantes">
+              <PropertyRef Name="RestauranteId" />
+            </Principal>
+            <Dependent Role="Pratos">
+              <PropertyRef Name="FK_RestauranteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PraticaDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Pratos" EntityType="Self.Pratos" />
+          <EntitySet Name="Restaurantes" EntityType="Self.Restaurantes" />
+          <AssociationSet Name="FK_Pratos_Restaurantes" Association="Self.FK_Pratos_Restaurantes">
+            <End Role="Restaurantes" EntitySet="Restaurantes" />
+            <End Role="Pratos" EntitySet="Pratos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PraticaDBModelStoreContainer" CdmEntityContainer="PraticaDBEntities">
+          <EntitySetMapping Name="Pratos">
+            <EntityTypeMapping TypeName="PraticaDBModel.Pratos">
+              <MappingFragment StoreEntitySet="Pratos">
+                <ScalarProperty Name="PratoId" ColumnName="PratoId" />
+                <ScalarProperty Name="PratoNome" ColumnName="PratoNome" />
+                <ScalarProperty Name="PratoDescricao" ColumnName="PratoDescricao" />
+                <ScalarProperty Name="Preco" ColumnName="Preco" />
+                <ScalarProperty Name="FK_RestauranteId" ColumnName="FK_RestauranteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurantes">
+            <EntityTypeMapping TypeName="PraticaDBModel.Restaurantes">
+              <MappingFragment StoreEntitySet="Restaurantes">
+                <ScalarProperty Name="RestauranteId" ColumnName="RestauranteId" />
+                <ScalarProperty Name="RestauranteNome" ColumnName="RestauranteNome" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

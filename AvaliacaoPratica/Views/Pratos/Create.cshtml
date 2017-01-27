@@ -1,0 +1,78 @@
+﻿@model AvaliacaoPratica.Models.Pratos
+
+@{
+    ViewBag.Title = "Cadastrar Prato";
+}
+<script src="jquery.min.js" type="text/javascript"></script>
+<script src="jquery.maskMoney.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#Preco").maskMoney();
+    })
+</script>
+<h2>Cadastro de Pratos</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    <div class="panel panel-success">
+        <div class="panel-heading">Dados</div>
+        <div class="panel-body">
+            <div class="form-horizontal col-md-offset-4">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.FK_RestauranteId, "Restaurante", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("FK_RestauranteId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FK_RestauranteId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.PratoNome, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.PratoNome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PratoNome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.PratoDescricao, htmlAttributes: new { @class = "control-label" })
+                        <p>@Html.TextAreaFor(model => model.PratoDescricao, new { htmlAttributes = new { @class = "form-control" } })</p>
+                        @Html.ValidationMessageFor(model => model.PratoDescricao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.Preco, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <button type="reset" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-repeat"></span> Limpar
+                </button>
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="~/Pratos" class="btn btn-danger">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+        Cancelar
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

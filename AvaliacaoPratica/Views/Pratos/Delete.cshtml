@@ -1,0 +1,59 @@
+﻿@model AvaliacaoPratica.Models.Pratos
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Apagar</h2>
+
+<h3>Você tem certeza que deseja apagar este prato?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PratoNome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PratoNome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PratoDescricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PratoDescricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FK_RestauranteId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Restaurantes.RestauranteNome)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" value="Apagar" class="btn btn-danger">
+            <span class="glyphicon glyphicon-floppy-remove"></span> Apagar</button>
+            <a href="~/Pratos" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                Cancelar
+            </a>
+        </div>
+    }
+</div>
